@@ -12,8 +12,10 @@ pipeline {
 
     stages {
         stage('Build gradle') {
-              script {
-                    sh "./gradlew build"
+              steps {
+                    script {
+                        sh "./gradlew build"
+                    }
               }
         }
         stage("Checkout code") {
