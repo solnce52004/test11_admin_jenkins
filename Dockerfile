@@ -12,8 +12,8 @@
 #ssl
 FROM openjdk:11.0.13-jdk-slim
 WORKDIR .
-ARG CRT_FILE=./tomcat-private.crt
-RUN keytool -importcert -file ${CRT_FILE}  -alias localtomcat -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
+RUN pwd
+RUN keytool -importcert -file tomcat-private.crt  -alias localtomcat -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR .
