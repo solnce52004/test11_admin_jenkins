@@ -1,6 +1,7 @@
-FROM gradle:jdk11 as builder
-COPY --chown=gradle:gradle . .
-RUN ./gradlew build
+#FROM gradle:jdk11 as builder
+#FROM gradle:7.3.1-jdk11 as builder
+#COPY --chown=gradle:gradle . .
+#RUN ./gradlew build
 
 #LABEL Author="solnce52004 <solnce52004@yandex.ru>"
 #LABEL VERSION=0.01
@@ -16,7 +17,7 @@ RUN ./gradlew build
 FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR .
 ARG JAR_FILE=./build/libs/test11_admin_jenkins-0.0.1-SNAPSHOT.jar
-COPY --from=builder ${JAR_FILE} app.jar
+COPY ${JAR_FILE} app.jar
 
 EXPOSE 4444
 ENTRYPOINT ["java","-jar","app.jar"]

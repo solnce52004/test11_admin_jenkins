@@ -11,6 +11,11 @@ pipeline {
     }
 
     stages {
+        stage('Build gradle') {
+              steps {
+                    sh "./gradlew build"
+              }
+        }
         stage("Checkout code") {
               steps {
                  checkout scm
