@@ -14,7 +14,9 @@ pipeline {
         }
         stage('Docker build and push') {
             steps {
-                 docker.build("solnce52004/test11_admin_jenkins:${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
+                 docker.build("solnce52004/test11_admin_jenkins:0.01", ".")
+                 .push("latest")
+                 .push("${env.BUILD_ID}")
             }
         }
         stage('Docker pull') {
