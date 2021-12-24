@@ -40,7 +40,7 @@ pipeline {
         stage('Docker run') {
             steps {
                 script{
-                  docker.image(registry + ":${env.BUILD_ID}").run('-d --rm -p 5555:4444')
+                  docker.image(registry + ":${env.BUILD_ID}").run('--rm -p 5555:4444')
                 }
             }
         }

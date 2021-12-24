@@ -10,9 +10,9 @@
 #RUN docker push solnce52004/test11_admin_jenkins:0.01
 
 #ssl
-#FROM openjdk:11.0.13-jdk-slim
-#ARG CRT_FILE=./src/main/resources/ssl/tomcat-private.crt
-#RUN keytool -importcert -file ${JAR_FILE}  -alias localtomcat -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
+FROM openjdk:11.0.13-jdk-slim
+ARG CRT_FILE=./src/main/resources/ssl/tomcat-private.crt
+RUN keytool -importcert -file ${JAR_FILE}  -alias localtomcat -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR .

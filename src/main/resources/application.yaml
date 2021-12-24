@@ -6,15 +6,15 @@ server:
   http2:
     enabled: true
 
-#  ssl:
-#    enabled: true
-#    key-alias: localtomcat
-#    key-store: classpath:ssl/local-tomcat-private.p12
-#    key-store-type: PKCS12
-#
-#    key-password: Zerkalo82
-#    key-store-password: Zerkalo82
-#    trust-store-password: Zerkalo82
+  ssl:
+    enabled: true
+    key-alias: localtomcat
+    key-store: classpath:ssl/local-tomcat-private.p12
+    key-store-type: PKCS12
+
+    key-password: Zerkalo82
+    key-store-password: Zerkalo82
+    trust-store-password: Zerkalo82
 
   error:
     whitelabel:
