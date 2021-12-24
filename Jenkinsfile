@@ -4,11 +4,11 @@ pipeline {
         registry = "solnce52004/test11_admin_jenkins"
         registryCredential = 'dockerhub'
     }
-    agent {
-      dockerfile {
-        filename 'Dockerfile'
-      }
-    }
+//     agent {
+//       dockerfile {
+//         filename 'Dockerfile'
+//       }
+//     }
     agent any
 
     stages {
