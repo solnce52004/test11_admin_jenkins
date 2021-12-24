@@ -1,6 +1,6 @@
-FROM gradle:7.3.1-jdk11 as builder
-COPY --chown=gradle:gradle . .
-RUN ./gradlew build
+#FROM gradle:7.3.1-jdk11 as builder
+#COPY --chown=gradle:gradle . .
+#RUN ./gradlew build
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR .

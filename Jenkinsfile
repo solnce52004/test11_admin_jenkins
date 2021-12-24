@@ -9,6 +9,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Build') {
+             steps {
+                    sh "./gradlew build"
+                }
+            }
         stage("Checkout code") {
               steps {
                  checkout scm
