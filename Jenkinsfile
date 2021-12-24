@@ -19,20 +19,6 @@ pipeline {
               }
         }
 
-//         stage ('Docker Build') {
-//           steps {
-//             script {
-//
-// //               withDockerServer([uri: "tcp://localhost:2375/"]) {
-//                 withDockerRegistry([credentialsId: registryCredential, url: "https://hub.docker.com/repository/docker/solnce52004/"]) {
-//
-//                    docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
-//                 }
-// //               }
-//             }
-//           }
-//         }
-
         stage('Docker build') {
             steps {
                 script{
@@ -44,8 +30,6 @@ pipeline {
             steps {
                 script{
                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-//                     docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
-                       myapp.push("latest")
                        myapp.push("${env.BUILD_ID}")
                    }
 
@@ -53,18 +37,10 @@ pipeline {
             }
         }
 
-//         stage('Docker build and push') {
-//             steps {
-//                 script{
-//                   docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
-//                 }
-//             }
-//         }
-
         stage('Docker run') {
             steps {
                 script{
-                  docker.image(registry + ":${env.BUILD_ID}").withRun('-d --rm -p 5555:4444') { c -> sh 'echo "ok"'}
+                  docker.image(registry + ":${env.BUILD_ID}").run('-d --rm -p 5555:4444')
                 }
             }
         }
