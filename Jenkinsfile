@@ -8,17 +8,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build gradle') {
-              steps {
-                 sh './gradlew build'
-              }
-        }
+//         stage('Build gradle') {
+//               steps {
+//                  sh './gradlew build'
+//               }
+//         }
         stage("Checkout code") {
               steps {
                  checkout scm
               }
         }
-
         stage('Docker build') {
             steps {
                 script{
@@ -36,10 +35,9 @@ pipeline {
                 }
             }
         }
-
         stage('Docker run') {
             steps {
-            sh 'docker stop container || true && docker rm container || true'
+                sh 'docker stop container || true && docker rm container || true'
 
                 script{
                   docker.image(registry + ":${env.BUILD_ID}").run('--rm -p 5555:4444 --name=container')
