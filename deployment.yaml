@@ -1,0 +1,54 @@
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    svc: test10-admin
+#    name: test10-admin
+#    namespace: test10-ns
+#spec:
+#  type: NodePort
+#  ports:
+#    - port: 4444
+#      name: test10
+#      nodePort: 31311
+#      protocol: TCP
+#      targetPort: 4444
+#  selector:
+#    app: test10-admin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: t10-lb
+  namespace: fleet-local
+  labels:
+    app: test10-admin
+spec:
+  replicas: 3
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: test10-admin
+      workload.user.cattle.io/workloadselector: apps.deployment-fleet-local-t10-lb
+  template:
+    metadata:
+      labels:
+        app: test10-admin
+        workload.user.cattle.io/workloadselector: apps.deployment-fleet-local-t10-lb
+    spec:
+      containers:
+        - name: container-0
+          image: solnce52004/test10_admin_jenkins:0.01
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "0.2"
+              memory: "300Mi"
+            requests:
+              cpu: "0.1"
+              memory: "100Mi"
+          ports:
+            - containerPort: 4444
+              name: https
+              protocol: TCP
