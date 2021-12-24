@@ -15,8 +15,8 @@ RUN ./gradlew build
 
 FROM adoptopenjdk/openjdk11:alpine-jre
 WORKDIR .
-ARG JAR_FILE=build/libs/test11_admin_jenkins-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
+ARG JAR_FILE=./build/libs/test11_admin_jenkins-0.0.1-SNAPSHOT.jar
+COPY --from=builder ${JAR_FILE} app.jar
 
 EXPOSE 4444
 ENTRYPOINT ["java","-jar","app.jar"]
