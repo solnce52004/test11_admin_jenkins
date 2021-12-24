@@ -22,12 +22,12 @@ pipeline {
           steps {
             script {
 
-              withDockerServer([uri: "tcp://var/run/docker.sock"]) {
+//               withDockerServer([uri: "tcp://localhost:2375/"]) {
                 withDockerRegistry([credentialsId: registryCredential, url: "https://hub.docker.com/repository/docker/solnce52004/"]) {
 
                    docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
                 }
-              }
+//               }
             }
           }
         }
