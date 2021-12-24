@@ -10,8 +10,7 @@ pipeline {
         }
         stage('Docker build and push') {
             steps {
-                def customImage = docker.build("solnce52004/test11_admin_jenkins:${env.BUILD_ID}", ".")
-                customImage.push("${env.BUILD_ID}")
+                 docker.build("solnce52004/test11_admin_jenkins:${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
             }
         }
         stage('Docker pull') {
