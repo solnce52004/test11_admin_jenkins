@@ -1,8 +1,8 @@
-#FROM gradle:7.3.1-jdk11 as builder
-#COPY --chown=gradle:gradle . .
+FROM gradle:7.3.1-jdk11 as builder
+COPY --chown=gradle:gradle . .
+RUN ./gradlew build
 
 FROM adoptopenjdk/openjdk11:alpine-jre
-RUN ./gradlew build
 WORKDIR .
 ARG JAR_FILE=./build/libs/test11_admin_jenkins-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
