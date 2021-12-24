@@ -18,6 +18,7 @@ pipeline {
                  checkout scm
               }
         }
+
 //         stage ('Docker Build') {
 //           steps {
 //             script {
@@ -31,14 +32,15 @@ pipeline {
 //             }
 //           }
 //         }
-        stage('Docker build and push') {
+
+        stage('Docker build') {
             steps {
                 script{
                   myapp = docker.build(registry + ":${env.BUILD_ID}", ".")
                 }
             }
         }
-        stage('Docker build and push') {
+        stage('Docker push') {
             steps {
                 script{
                   docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
@@ -50,6 +52,7 @@ pipeline {
                 }
             }
         }
+
 //         stage('Docker build and push') {
 //             steps {
 //                 script{
@@ -57,6 +60,7 @@ pipeline {
 //                 }
 //             }
 //         }
+
         stage('Docker run') {
             steps {
                 script{
