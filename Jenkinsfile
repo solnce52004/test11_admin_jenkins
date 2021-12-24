@@ -39,8 +39,10 @@ pipeline {
 
         stage('Docker run') {
             steps {
+            sh 'docker stop container || true && docker rm container || true'
+
                 script{
-                  docker.image(registry + ":${env.BUILD_ID}").run('--rm -p 5555:4444')
+                  docker.image(registry + ":${env.BUILD_ID}").run('--rm -p 5555:4444 --name=container')
                 }
             }
         }
