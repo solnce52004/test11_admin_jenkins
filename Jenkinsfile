@@ -18,18 +18,37 @@ pipeline {
                  checkout scm
               }
         }
-        stage ('Docker Build') {
-          steps {
-            script {
-
-//               withDockerServer([uri: "tcp://localhost:2375/"]) {
-                withDockerRegistry([credentialsId: registryCredential, url: "https://hub.docker.com/repository/docker/solnce52004/"]) {
-
-                   docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
+//         stage ('Docker Build') {
+//           steps {
+//             script {
+//
+// //               withDockerServer([uri: "tcp://localhost:2375/"]) {
+//                 withDockerRegistry([credentialsId: registryCredential, url: "https://hub.docker.com/repository/docker/solnce52004/"]) {
+//
+//                    docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
+//                 }
+// //               }
+//             }
+//           }
+//         }
+        stage('Docker build and push') {
+            steps {
+                script{
+                  myapp = docker.build(registry + ":${env.BUILD_ID}", ".")
                 }
-//               }
             }
-          }
+        }
+        stage('Docker build and push') {
+            steps {
+                script{
+                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+//                     docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
+                       myapp.push("latest")
+                       myapp.push("${env.BUILD_ID}")
+                   }
+
+                }
+            }
         }
 //         stage('Docker build and push') {
 //             steps {
