@@ -25,6 +25,15 @@ pipeline {
                 }
             }
         }
+        stage('Docker run') {
+             steps {
+                 sh 'docker stop container || true && docker rm container || true'
+
+                 script{
+                     myapp.run('--rm -p 5555:4444 --name=container')
+                 }
+             }
+        }
         stage('Docker push') {
             steps {
                 script{
@@ -32,15 +41,6 @@ pipeline {
                        myapp.push("${env.BUILD_ID}")
                    }
 
-                }
-            }
-        }
-        stage('Docker run') {
-            steps {
-                sh 'docker stop container || true && docker rm container || true'
-
-                script{
-                  docker.image(registry + ":${env.BUILD_ID}").run('--rm -p 5555:4444 --name=container')
                 }
             }
         }
