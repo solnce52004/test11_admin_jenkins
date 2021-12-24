@@ -9,6 +9,7 @@ pipeline {
         filename 'Dockerfile'
       }
     }
+    agent any
 
     stages {
         stage('Build gradle') {
