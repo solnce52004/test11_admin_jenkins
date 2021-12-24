@@ -4,11 +4,7 @@ pipeline {
         registry = "solnce52004/test11_admin_jenkins"
         registryCredential = 'dockerhub'
     }
-//     agent {
-//       dockerfile {
-//         filename 'Dockerfile'
-//       }
-//     }
+
     agent any
 
     stages {
@@ -22,13 +18,26 @@ pipeline {
                  checkout scm
               }
         }
-        stage('Docker build and push') {
-            steps {
-                script{
-                  docker.build(registry + ":${env.BUILD_ID}", ".").push("latest").push("${env.BUILD_ID}")
+        stage ('Docker Build') {
+          steps {
+            script {
+
+              withDockerServer([uri: "tcp://var/run/docker.sock"]) {
+                withDockerRegistry([credentialsId: registryCredential, url: "https://hub.docker.com/repository/docker/solnce52004/"]) {
+
+                   docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
                 }
+              }
             }
+          }
         }
+//         stage('Docker build and push') {
+//             steps {
+//                 script{
+//                   docker.build(registry + ":${env.BUILD_ID}", ".").push("${env.BUILD_ID}")
+//                 }
+//             }
+//         }
         stage('Docker run') {
             steps {
                 script{
