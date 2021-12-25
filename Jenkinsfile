@@ -31,7 +31,7 @@ pipeline {
                 sh new StringBuffer()
                     .append('docker stop ').append(containerName)
                     .append(' || true && docker rm ').append(containerName)
-                    .append( ' && docker rmi ').append(registry).append(":(${env.BUILD_ID} - 1)")
+                    .append( ' && docker rmi ').append(registry).append(":${env.BUILD_ID} - 1")
                     .append(' || true')
                     .toString()
 
