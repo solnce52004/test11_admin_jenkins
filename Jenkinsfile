@@ -29,9 +29,10 @@ pipeline {
         stage('Docker run') {
              steps {
              sh String.format(
-                   '''docker stop %s || true && docker rm %s  || true''',
+                   '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
                    containerName,
-                   containerName
+                   containerName,
+                   myapp.id
                 )
 
                  script{
