@@ -4,7 +4,7 @@ pipeline {
         registry = "solnce52004/test11_admin_jenkins"
         registryCredential = 'dockerhub'
         containerName = 'container'
-        prevTage = +"${env.BUILD_ID}" - 1
+        prevTage = Number("${env.BUILD_ID}") - 1
     }
 
     agent any
