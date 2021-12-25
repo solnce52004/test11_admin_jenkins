@@ -13,7 +13,7 @@ pipeline {
              steps {
                     sh "./gradlew build"
                 }
-            }
+        }
         stage("Checkout code") {
               steps {
                  checkout scm
@@ -28,10 +28,12 @@ pipeline {
         }
         stage('Docker run') {
              steps {
-                 sh 'docker stop ' + containerName + ' || true && docker rm ' + containerName + ' || true'
+                 sh 'docker stop ' + containerName
+                 + ' || true && docker rm ' + containerName + ' && docker rmi ' + registry + ":(${env.BUILD_ID} - 1)"
+                 + ' || true'
 
                  script{
-                     myapp.run('--rm -p 5555:4444 --name=' + containerName)
+                     myapp.run('-p 5555:4444 --name=' + containerName)
                  }
              }
         }
