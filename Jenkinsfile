@@ -4,7 +4,6 @@ pipeline {
         registry = "solnce52004/test11_admin_jenkins"
         registryCredential = 'dockerhub'
         containerName = 'container'
-        prevTage = (Number("${env.BUILD_ID}") - 1)
     }
 
     agent any
@@ -29,12 +28,11 @@ pipeline {
         }
         stage('Docker run') {
              steps {
-                sh new StringBuffer()
-                    .append('docker stop ').append(containerName)
-                    .append(' || true && docker rm ').append(containerName)
-                    .append(' && docker rmi ').append(registry).append(":").append(prevTage)
-                    .append(' || true')
-                    .toString()
+             sh String.format(
+                   '''docker stop %s || true && docker rm %s  || true''',
+                   containerName,
+                   containerName
+                )
 
                  script{
                      myapp.run(' -p 5555:4444 --name=' + containerName)
@@ -45,7 +43,7 @@ pipeline {
             steps {
                 script{
                   docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                       myapp.push("${env.BUILD_ID}")
+                       myapp.push()
                    }
 
                 }
