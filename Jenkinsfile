@@ -14,27 +14,43 @@ pipeline {
                     sh "./gradlew build"
                 }
         }
+        stage('Docker rmi') {
+            steps {
+                 sh String.format(
+                     '''
+                        docker stop %s
+                        || true && docker rm %s && docker rmi -f $(docker images | grep %s | awk '{print $3}')
+                        || true
+                     ''',
+                     containerName,
+                     containerName,
+                     registry
+                 )
+            }
+        }
         stage("Checkout code") {
-              steps {
-                 checkout scm
-              }
+             steps {
+                  checkout scm
+             }
+        }
+        stage('Docker build') {
+             steps {
+                  script{
+                       myApp =  docker.build(registry + ":${env.BUILD_ID}", ".")
+                  }
+             }
+        }
+        stage('Docker run') {
+            steps {
+                script{
+                   myApp.run(' -p 5555:4444 --name=' + containerName)
+                }
+            }
         }
         stage('Docker push') {
             steps {
                 script{
                   docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                    myApp =  docker.build(registry + ":${env.BUILD_ID}", ".")
-
-                    sh "echo '*********'"
-                    sh 'echo ' + myApp
-                    sh String.format(
-                         '''docker stop %s || true && docker rm %s && docker rmi -f $(docker images | grep %s)  || true''',
-                         containerName,
-                         containerName,
-                         registry
-                    )
-
-                       myApp.run(' -p 5555:4444 --name=' + containerName)
                        myApp.push("${env.BUILD_ID}")
                    }
                 }
