@@ -26,12 +26,12 @@ pipeline {
                     myApp =  docker.build(registry + ":${env.BUILD_ID}", ".")
 
                     sh "echo '*********'"
-                    sh 'echo ' + myApp.id
+                    sh 'echo ' + myApp
                     sh String.format(
-                         '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
+                         '''docker stop %s || true && docker rm %s && docker rmi -f $(docker images | grep %s)  || true''',
                          containerName,
                          containerName,
-                         myApp.id
+                         registry
                     )
 
                        myApp.run(' -p 5555:4444 --name=' + containerName)
