@@ -25,7 +25,7 @@ pipeline {
                    '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
                    containerName,
                    containerName,
-                   myapp.Image.id
+                   docker.Image.id
                 )
              }
         }
