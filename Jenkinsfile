@@ -4,6 +4,7 @@ pipeline {
         registry = "solnce52004/test11_admin_jenkins"
         registryCredential = 'dockerhub'
         containerName = 'container'
+        prevTage = "${env.BUILD_ID}" - 1
     }
 
     agent any
@@ -31,12 +32,12 @@ pipeline {
                 sh new StringBuffer()
                     .append('docker stop ').append(containerName)
                     .append(' || true && docker rm ').append(containerName)
-                    .append( ' && docker rmi ').append(registry).append(":${env.BUILD_ID} - 1")
+                    .append(' && docker rmi ').append(registry).append(":").append(prevTage)
                     .append(' || true')
                     .toString()
 
                  script{
-                     myapp.run('-p 5555:4444 --name=' + containerName)
+                     myapp.run(' -p 5555:4444 --name=' + containerName)
                  }
              }
         }
