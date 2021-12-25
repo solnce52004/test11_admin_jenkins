@@ -19,24 +19,21 @@ pipeline {
                  checkout scm
               }
         }
-        stage('Docker run') {
-             steps {
-             sh String.format(
-                   '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
-                   containerName,
-                   containerName,
-                   docker.Image.id
-                )
-             }
-        }
         stage('Docker push') {
             steps {
                 script{
                   docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                     docker
-                       .build(registry + ":${env.BUILD_ID}", ".")
-                       .run(' -p 5555:4444 --name=' + containerName)
-                       .push("${env.BUILD_ID}")
+                    myApp =  docker.build(registry + ":${env.BUILD_ID}", ".")
+
+                    sh String.format(
+                         '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
+                         containerName,
+                         containerName,
+                         myApp.Image.id
+                    )
+
+                       myApp.run(' -p 5555:4444 --name=' + containerName)
+                       myApp.push("${env.BUILD_ID}")
                    }
                 }
             }
