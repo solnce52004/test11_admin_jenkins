@@ -29,7 +29,7 @@ pipeline {
                          '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
                          containerName,
                          containerName,
-                         myApp.Image.id
+                         myApp.id
                     )
 
                        myApp.run(' -p 5555:4444 --name=' + containerName)
