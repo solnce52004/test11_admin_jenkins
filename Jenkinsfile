@@ -28,10 +28,6 @@ pipeline {
         }
         stage('Docker run') {
              steps {
-                 sh 'docker stop ' + containerName
-                 + ' || true && docker rm ' + containerName + ' && docker rmi ' + registry + ":(${env.BUILD_ID} - 1)"
-                 + ' || true'
-
                 sh new StringBuffer()
                     .append('docker stop ').append(containerName)
                     .append(' || true && docker rm ').append(containerName)
