@@ -25,6 +25,8 @@ pipeline {
                   docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                     myApp =  docker.build(registry + ":${env.BUILD_ID}", ".")
 
+                    sh "echo '*********'"
+                    sh 'echo ' + myApp.id
                     sh String.format(
                          '''docker stop %s || true && docker rm %s && docker rmi -f %s  || true''',
                          containerName,
