@@ -32,6 +32,13 @@ pipeline {
                  + ' || true && docker rm ' + containerName + ' && docker rmi ' + registry + ":(${env.BUILD_ID} - 1)"
                  + ' || true'
 
+                sh new StringBuffer()
+                    .append('docker stop ').append(containerName)
+                    .append(' || true && docker rm ').append(containerName)
+                    .append( ' && docker rmi ').append(registry).append(":(${env.BUILD_ID} - 1)")
+                    .append(' || true')
+                    .toString()
+
                  script{
                      myapp.run('-p 5555:4444 --name=' + containerName)
                  }
