@@ -15,7 +15,7 @@ server:
     key-password: Zerkalo82
     key-store-password: Zerkalo82
     trust-store-password: changeit
-    trust-store: "/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts"
+#    trust-store: "/usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts"
 
   error:
     whitelabel:
