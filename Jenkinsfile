@@ -6,7 +6,7 @@ pipeline {
         containerName = 'container'
     }
 
-    agent any
+//     agent any
 
     stages {
        agent { docker{ image "openjdk:11.0.13-jdk-slim" }}
@@ -16,6 +16,7 @@ pipeline {
                 }
         }
         stage('Build') {
+          agent { docker{ image "gradle:7.3.1-jdk11" }}
              steps {
                     sh "./gradlew build"
                 }
