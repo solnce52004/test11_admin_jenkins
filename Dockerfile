@@ -10,7 +10,7 @@ COPY ${JAR_FILE} app.jar
 
 #ssl
 FROM openjdk:11.0.13-jdk-slim
-ARG CRT_FILE=./src/main/resources/ssl/tomcat-private.crt
+ARG CRT_FILE=tomcat-private.crt
 RUN keytool -importcert -file ${JAR_FILE} -alias localtomcat -cacerts -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit -noprompt
 
 
