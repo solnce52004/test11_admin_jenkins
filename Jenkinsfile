@@ -7,10 +7,15 @@ pipeline {
     }
 
 //     agent any
-    stages {
 
+ agent {
+     docker{
+         image "openjdk:11.0.13-jdk-slim"
+    }
+ }
+
+    stages {
         stage('ssl') {
-             agent { docker{ image "openjdk:11.0.13-jdk-slim" }}
              steps {
                     sh "keytool -importcert -file ./tomcat-private.crt -alias localtomcat -cacerts -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit"
                 }
