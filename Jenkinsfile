@@ -43,7 +43,7 @@ pipeline {
         stage('Docker run') {
             steps {
                 script{
-                   myApp.run(' -p 5555:4444 --network="test11" --name=' + containerName)
+                   myApp.run(' -d -p 5555:4444 --network="test11" --name=' + containerName)
                 }
             }
         }
