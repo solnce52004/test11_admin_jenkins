@@ -18,14 +18,14 @@ pipeline {
         stage('ssl') {
              steps {
                     sh "docker pull openjdk:11.0.13-jdk-slim"
-                    sh "keytool -importcert -file ./tomcat-private.crt -alias localtomcat -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit"
+                    sh "keytool -importcert -file ./tomcat-private.crt -alias localtomcat -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit || true"
                 }
         }
-//         stage('Build') {
-//              steps {
-//                     sh "./gradlew build"
-//                 }
-//         }
+        stage('Build') {
+             steps {
+                    sh "./gradlew build"
+                }
+        }
         stage('Docker rmi') {
             steps {
                  sh String.format(
