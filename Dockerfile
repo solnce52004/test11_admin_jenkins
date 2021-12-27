@@ -5,7 +5,7 @@
 #ssl
 FROM openjdk:11.0.13-jdk-slim
 WORKDIR .
-RUN "keytool -importcert -file tomcat-private.crt -alias localtomcat -cacerts -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit -noprompt"
+RUN "keytool -importcert -file ./tomcat-private.crt -alias localtomcat -cacerts -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit -noprompt"
 
 
 FROM adoptopenjdk/openjdk11:alpine-jre
