@@ -28,9 +28,9 @@ pipeline {
                  )
             }
         }
-        stage("Checkout code") {
+        stage('docker network') {
              steps {
-                  checkout scm
+                 sh "docker network create -d bridge test11 || true"
              }
         }
         stage('Docker build') {
@@ -43,7 +43,7 @@ pipeline {
         stage('Docker run') {
             steps {
                 script{
-                   myApp.run(' -p 5555:4444 --name=' + containerName)
+                   myApp.run(' -p 5555:4444 --network="test11" --name=' + containerName)
                 }
             }
         }
