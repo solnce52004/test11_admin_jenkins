@@ -1,5 +1,5 @@
 server:
-  address: 0.0.0.0
+  address: 188.212.125.157
   port: 4444
   compression:
     enabled: true
