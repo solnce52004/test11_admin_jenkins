@@ -8,19 +8,7 @@ pipeline {
 
     agent any
 
-//  agent {
-//      docker{
-//          image "openjdk:11.0.13-jdk-slim"
-//     }
-//  }
-
     stages {
-//         stage('ssl') {
-//              steps {
-//                     sh "docker pull openjdk:11.0.13-jdk-slim"
-//                     sh "keytool -importcert -file ./tomcat-private.crt -alias localtomcat -keystore /usr/lib/jvm/java-11-openjdk-amd64/lib/security/cacerts -keypass Zerkalo82 -storepass changeit"
-//                 }
-//         }
         stage('Build') {
              steps {
                     sh "./gradlew build"
@@ -55,7 +43,7 @@ pipeline {
         stage('Docker run') {
             steps {
                 script{
-                   myApp.run(' -d -p 5555:4444 --network="test11" --name=' + containerName)
+                   myApp.run(' -d -p 5555:4444 --network="test11" -v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts --name=' + containerName)
                 }
             }
         }
