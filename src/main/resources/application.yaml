@@ -8,7 +8,7 @@ server:
 
   ssl:
     enabled: false
-    key-alias: iptomcat
+    key-alias: santomcat
     key-store: classpath:ssl/server.p12
     key-store-type: PKCS12
 
