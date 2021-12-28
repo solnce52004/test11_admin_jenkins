@@ -8,7 +8,7 @@ server:
 
   ssl:
     enabled: false
-    key-alias: gatomcat
+    key-alias: iptomcat
     key-store: classpath:ssl/local-tomcat-private.p12
     key-store-type: PKCS12
 
