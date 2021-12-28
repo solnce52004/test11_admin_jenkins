@@ -9,7 +9,7 @@ server:
   ssl:
     enabled: false
     key-alias: iptomcat
-    key-store: classpath:ssl/local-tomcat-private.p12
+    key-store: classpath:ssl/server.p12
     key-store-type: PKCS12
 
     key-password: Zerkalo82
