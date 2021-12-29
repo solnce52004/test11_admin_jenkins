@@ -43,7 +43,7 @@ pipeline {
         stage('Docker run') {
             steps {
                 script{
-                   myApp.run(' -d -p 5555:4444 --network="test11" -v /usr/lib/jvm/java-11-openjdk-amd64/lib/security/:/usr/lib/jvm/java-11-openjdk-amd64/lib/security/ -v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts --name=' + containerName)
+                   myApp.run(' -d -p 188.212.125.157:5555:4444 --network="test11" -v /usr/lib/jvm/java-11-openjdk-amd64/lib/security/:/usr/lib/jvm/java-11-openjdk-amd64/lib/security/ -v /etc/ssl/certs/java/cacerts:/etc/ssl/certs/java/cacerts --name=' + containerName)
                 }
             }
         }
