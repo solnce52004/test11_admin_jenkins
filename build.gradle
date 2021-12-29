@@ -25,6 +25,7 @@ ext {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'de.codecentric:spring-boot-admin-starter-server'
+    implementation 'de.codecentric:spring-boot-admin-server-ui:2.4.3'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
